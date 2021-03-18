@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import axios from 'axios';
 
+import CastView from './CastView';
+
 class MovieDetailsPageView extends Component {
   state = {
     // book: [],
@@ -10,6 +12,7 @@ class MovieDetailsPageView extends Component {
     overview: null,
     genres: [],
     id: null,
+    poster_path: '',
   };
 
   async componentDidMount() {
@@ -21,29 +24,42 @@ class MovieDetailsPageView extends Component {
   }
 
   render() {
+    const { title, vote_average, overview, genres } = this.state;
+    const { url } = this.props.match;
     return (
       <>
-        <h1>{this.state.title}</h1>
-        <p>Vote average: {this.state.vote_average}</p>
+        <div>
+          {this.state.poster_path !== '' && (
+            <img
+              src={`https://image.tmdb.org/t/p/w500${this.state.poster_path}`}
+              alt=""
+            />
+          )}
+          <div>
+            <h1>{title}</h1>
+            <p>Vote average: {vote_average}</p>
+          </div>
+        </div>
         <div>
           <h2>Overview</h2>
-          <p>{this.state.overview}</p>
+          <p>{overview}</p>
         </div>
         <div>
           <h3>Genres: </h3>
-          {this.state.genres.map(genre => (
-            <span key={genre.id}>{genre.name}, </span>
+          {genres.map(({ id, name }) => (
+            <span key={id}>{name}, </span>
           ))}
         </div>
 
         <ul>
           <li>
-            <NavLink to={`${this.props.match.url}/cast`}>Cast</NavLink>
+            <NavLink to={`${url}/cast`}>Cast</NavLink>
           </li>
         </ul>
         <Route
           path="/movies/:movieId/cast"
-          render={() => <p>Это актеры данного фильма</p>}
+          // render={() => <p>Это актеры данного фильма</p>}
+          component={CastView}
         />
       </>
     );

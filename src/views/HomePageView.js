@@ -11,18 +11,20 @@ class HomePageView extends Component {
     const responce = await axios.get(
       'https://api.themoviedb.org/3/trending/movie/day?api_key=ec0633f4801b6d57348783906eedf2d2',
     );
-    console.log(responce.data.results);
-    this.setState({ movies: responce.data.results });
+    const { results } = responce.data;
+    // console.log(responce.data.results);
+    this.setState({ movies: results });
   }
 
   render() {
-    console.log(this.props.match.url);
+    // console.log(this.props.match.url);
+    const { movies } = this.state;
     return (
       <div>
         <h1>Это домашняя страница</h1>
-        {this.state.movies.length > 0 && (
+        {movies.length > 0 && (
           <ul>
-            {this.state.movies.map(movie => (
+            {movies.map(movie => (
               <li key={movie.id}>
                 {/* <p>{movie.title}</p> */}
                 <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
