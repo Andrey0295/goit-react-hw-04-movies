@@ -3,6 +3,7 @@ import { NavLink, Route } from 'react-router-dom';
 import axios from 'axios';
 
 import CastView from './CastView';
+import ReviewsView from './ReviewsView';
 
 class MovieDetailsPageView extends Component {
   state = {
@@ -24,16 +25,13 @@ class MovieDetailsPageView extends Component {
   }
 
   render() {
-    const { title, vote_average, overview, genres } = this.state;
+    const { title, vote_average, overview, genres, poster_path } = this.state;
     const { url } = this.props.match;
     return (
       <>
         <div>
-          {this.state.poster_path !== '' && (
-            <img
-              src={`https://image.tmdb.org/t/p/w500${this.state.poster_path}`}
-              alt=""
-            />
+          {poster_path !== '' && (
+            <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="" />
           )}
           <div>
             <h1>{title}</h1>
@@ -55,12 +53,12 @@ class MovieDetailsPageView extends Component {
           <li>
             <NavLink to={`${url}/cast`}>Cast</NavLink>
           </li>
+          <li>
+            <NavLink to={`${url}/reviews`}>Reviews</NavLink>
+          </li>
         </ul>
-        <Route
-          path="/movies/:movieId/cast"
-          // render={() => <p>Это актеры данного фильма</p>}
-          component={CastView}
-        />
+        <Route path="/movies/:movieId/cast" component={CastView} />
+        <Route path="/movies/:movieId/reviews" component={ReviewsView} />
       </>
     );
   }
