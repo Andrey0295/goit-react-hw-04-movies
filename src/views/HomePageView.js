@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+
+import PopularMovies from '../Components/PopularMovies/PopularMovies';
 
 class HomePageView extends Component {
   state = {
@@ -18,20 +19,7 @@ class HomePageView extends Component {
 
   render() {
     const { movies } = this.state;
-    return (
-      <div>
-        <h1>Это домашняя страница</h1>
-        {movies.length > 0 && (
-          <ul>
-            {movies.map(movie => (
-              <li key={movie.id}>
-                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    );
+    return <div>{movies.length > 0 && <PopularMovies movies={movies} />}</div>;
   }
 }
 
