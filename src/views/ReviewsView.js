@@ -1,7 +1,7 @@
 import React from 'react';
 
-const MovieReviewsView = () => {
+const ReviewsView = () => {
   return <h1>Обзоры для кинофильмов</h1>;
 };
 
-export default MovieReviewsView;
+export default ReviewsView;

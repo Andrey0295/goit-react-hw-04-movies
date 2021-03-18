@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-class HomeView extends Component {
+class HomePageView extends Component {
   state = {
     movies: [],
   };
@@ -15,15 +16,16 @@ class HomeView extends Component {
   }
 
   render() {
+    console.log(this.props.match.url);
     return (
       <div>
-        <h1>Это домашняя страница</h1>;
+        <h1>Это домашняя страница</h1>
         {this.state.movies.length > 0 && (
           <ul>
             {this.state.movies.map(movie => (
               <li key={movie.id}>
-                <h3>{movie.title}</h3>
-                <p>{movie.overview}</p>
+                {/* <p>{movie.title}</p> */}
+                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
               </li>
             ))}
           </ul>
@@ -33,4 +35,4 @@ class HomeView extends Component {
   }
 }
 
-export default HomeView;
+export default HomePageView;

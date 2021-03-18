@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, NavLink, Switch } from 'react-router-dom';
 
-import HomeView from './views/HomeView';
-import MovieCreditsView from './views/MovieCreditsView';
-import MovieDetailsView from './views/MovieDetailsView';
-import SearchMoviesView from './views/SearchMoviesView';
-import MovieReviewsView from './views/MovieReviewsView';
+import HomePageView from './views/HomePageView';
+import CastView from './views/CastView';
+import MovieDetailsPageView from './views/MovieDetailsPageView';
+import MoviesPageView from './views/MoviesPageView';
+import ReviewsView from './views/ReviewsView';
 import NotFoundView from './views/NotFoundView';
 
 import styles from './styles/styles.module.css';
@@ -28,7 +28,7 @@ const App = () => {
         </li>
         <li>
           <NavLink
-            to="/search-movies"
+            to="/movies"
             className={styles.link}
             activeClassName={styles.linkActive}
           >
@@ -37,11 +37,11 @@ const App = () => {
         </li>
       </ul>
       <Switch>
-        <Route exact path="/" component={HomeView} />
-        <Route path="/search-movies" component={SearchMoviesView} />
-        <Route path="/details" component={MovieDetailsView} />
-        <Route path="/credits" component={MovieCreditsView} />
-        <Route path="/reviews" component={MovieReviewsView} />
+        <Route exact path="/" component={HomePageView} />
+        <Route exact path="/movies" component={MoviesPageView} />
+        <Route path="/movies/:movieId" component={MovieDetailsPageView} />
+        <Route path="/cast" component={CastView} />
+        <Route path="/reviews" component={ReviewsView} />
         <Route component={NotFoundView} />
       </Switch>
     </>
