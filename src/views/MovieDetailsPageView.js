@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import axios from 'axios';
 
-import CastView from './CastView';
-import ReviewsView from './ReviewsView';
+import Cast from '../Components/Cast/Cast';
+import Reviews from '../Components/Reviews/Reviews';
 
 class MovieDetailsPageView extends Component {
   state = {
-    // book: [],
     title: null,
     vote_average: null,
     overview: null,
@@ -20,7 +19,7 @@ class MovieDetailsPageView extends Component {
     const responce = await axios.get(
       `https://api.themoviedb.org/3/movie/${this.props.match.params.movieId}?api_key=ec0633f4801b6d57348783906eedf2d2&language=en-US`,
     );
-    console.log(responce.data);
+
     this.setState({ ...responce.data });
   }
 
@@ -57,8 +56,14 @@ class MovieDetailsPageView extends Component {
             <NavLink to={`${url}/reviews`}>Reviews</NavLink>
           </li>
         </ul>
-        <Route path="/movies/:movieId/cast" component={CastView} />
-        <Route path="/movies/:movieId/reviews" component={ReviewsView} />
+        <Route
+          path="/movies/:movieId/cast"
+          render={props => <Cast {...props} />}
+        />
+        <Route
+          path="/movies/:movieId/reviews"
+          render={props => <Reviews {...props} />}
+        />
       </>
     );
   }

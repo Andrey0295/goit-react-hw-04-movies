@@ -11,33 +11,37 @@ class MoviesPageView extends Component {
   componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log('Component did update');
+    // this.fetchMOvies();
   }
   searchInputId = shortid.generate();
 
   async fetchMOvies() {
-    const responce = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=ec0633f4801b6d57348783906eedf2d2&language=en-US&query=${this.state.query}&page=1&include_adult=false`,
-    );
+    const responce = await axios
+      .get(
+        `https://api.themoviedb.org/3/search/movie?api_key=ec0633f4801b6d57348783906eedf2d2&language=en-US&query=${this.state.query}&page=1&include_adult=false`,
+      )
+      .catch(console.log('error!!!'));
     const { results } = responce.data;
-    // console.log(responce.data);
-    this.setState({ movies: [...results] });
+
+    this.setState({ movies: results });
   }
 
   handleInputChange = e => {
     const { value } = e.currentTarget;
-    // console.log(e.currentTarget.value);
+
     this.setState({ query: value });
   };
   handleSubmit = e => {
     e.preventDefault();
-    // console.log(this.state);
+
+    if (this.state.query !== '') {
+      this.fetchMOvies();
+    }
+
     this.setState({ query: '' });
-    this.fetchMOvies();
   };
 
   render() {
-    // console.log(this.props.match.url);
     const { query, movies } = this.state;
     const { url } = this.props.match;
     return (
@@ -52,13 +56,15 @@ class MoviesPageView extends Component {
             onChange={this.handleInputChange}
           />
         </form>
-        <ul>
-          {movies.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`${url}/${id}`}>{title}</Link>
-            </li>
-          ))}
-        </ul>
+        {movies.length > 0 && (
+          <ul>
+            {movies.map(({ id, title }) => (
+              <li key={id}>
+                <Link to={`${url}/${id}`}>{title}</Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </>
     );
   }

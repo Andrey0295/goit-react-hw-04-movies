@@ -12,12 +12,11 @@ class HomePageView extends Component {
       'https://api.themoviedb.org/3/trending/movie/day?api_key=ec0633f4801b6d57348783906eedf2d2',
     );
     const { results } = responce.data;
-    // console.log(responce.data.results);
+
     this.setState({ movies: results });
   }
 
   render() {
-    // console.log(this.props.match.url);
     const { movies } = this.state;
     return (
       <div>
@@ -26,7 +25,6 @@ class HomePageView extends Component {
           <ul>
             {movies.map(movie => (
               <li key={movie.id}>
-                {/* <p>{movie.title}</p> */}
                 <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
               </li>
             ))}
