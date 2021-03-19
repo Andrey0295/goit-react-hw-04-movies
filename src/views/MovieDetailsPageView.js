@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import axios from 'axios';
 
+import routes from '../routes';
+
+import MovieDetailsBlock from '../Components/MovieDetailsBlock/MovieDetailsBlock';
 import Cast from '../Components/Cast/Cast';
 import Reviews from '../Components/Reviews/Reviews';
 
@@ -16,6 +19,10 @@ class MovieDetailsPageView extends Component {
   };
 
   async componentDidMount() {
+    this.fetchMovieDetails();
+  }
+
+  async fetchMovieDetails() {
     const responce = await axios.get(
       `https://api.themoviedb.org/3/movie/${this.props.match.params.movieId}?api_key=ec0633f4801b6d57348783906eedf2d2&language=en-US`,
     );
@@ -23,31 +30,31 @@ class MovieDetailsPageView extends Component {
     this.setState({ ...responce.data });
   }
 
+  handleGoBack = () => {
+    const { history, location } = this.props;
+    if (location.state && location.state.from) {
+      return history.push(location.state.from);
+    }
+    history.push(routes.movies);
+    // history.push(location?.state?.from || routes.movies);
+  };
+
   render() {
     const { title, vote_average, overview, genres, poster_path } = this.state;
     const { url } = this.props.match;
+
     return (
       <>
-        <div>
-          {poster_path !== '' && (
-            <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="" />
-          )}
-          <div>
-            <h1>{title}</h1>
-            <p>Vote average: {vote_average}</p>
-          </div>
-        </div>
-        <div>
-          <h2>Overview</h2>
-          <p>{overview}</p>
-        </div>
-        <div>
-          <h3>Genres: </h3>
-          {genres.map(({ id, name }) => (
-            <span key={id}>{name}, </span>
-          ))}
-        </div>
-
+        <button type="button" onClick={this.handleGoBack}>
+          Go back
+        </button>
+        <MovieDetailsBlock
+          movieTitle={title}
+          imageUrl={poster_path}
+          vote_average={vote_average}
+          overview={overview}
+          genres={genres}
+        />
         <ul>
           <li>
             <NavLink to={`${url}/cast`}>Cast</NavLink>

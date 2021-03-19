@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import PopularMovies from '../Components/PopularMovies/PopularMovies';
+import MoviesList from '../Components/MoviesList/MoviesList';
 
 class HomePageView extends Component {
   state = {
@@ -9,17 +9,20 @@ class HomePageView extends Component {
   };
 
   async componentDidMount() {
+    this.fetchPopularMovies();
+  }
+
+  async fetchPopularMovies() {
     const responce = await axios.get(
       'https://api.themoviedb.org/3/trending/movie/day?api_key=ec0633f4801b6d57348783906eedf2d2',
     );
-    const { results } = responce.data;
 
-    this.setState({ movies: results });
+    this.setState({ movies: responce.data.results });
   }
 
   render() {
     const { movies } = this.state;
-    return <div>{movies.length > 0 && <PopularMovies movies={movies} />}</div>;
+    return <div>{movies.length > 0 && <MoviesList movies={movies} />}</div>;
   }
 }
 
