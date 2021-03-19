@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/Components/SearchForm/SearchForm.module.css"],"names":[],"mappings":"AAAA,+BACE,UAAW,CACX,UAAW,CACX,YAAc,CACd,cACF","file":"movies-view.f70bed6e.chunk.css","sourcesContent":[".searchInput {\r\n  width: 20em;\r\n  height: 2em;\r\n  padding: 0.5em;\r\n  font-size: 20px;\r\n}\r\n"]}
