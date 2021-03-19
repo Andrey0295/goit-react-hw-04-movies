@@ -1,37 +1,38 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
+import moviesApi from '../../services/movies-api';
 
 class Cast extends Component {
   state = {
     actors: [],
   };
   async componentDidMount() {
-    const movieId = this.props.match.params.movieId;
-    const responce = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=ec0633f4801b6d57348783906eedf2d2&language=en-US&per_page=1`,
-    );
+    const { movieId } = this.props.match.params;
+    const responce = await moviesApi.fetchCast(movieId);
 
     this.setState({ actors: responce.data.cast });
   }
 
   render() {
+    const { actors } = this.state;
     return (
       <>
-        <h1>Состав актеров фильма</h1>
-        {this.state.actors.length > 0 && (
+        {actors.length > 0 ? (
           <ul>
-            {this.state.actors.map(actor => (
-              <li key={actor.id}>
-                <p>{actor.name}</p>
-                {actor.profile_path ? (
+            {actors.map(({ id, name, profile_path }) => (
+              <li key={id}>
+                <p>{name}</p>
+                {profile_path ? (
                   <img
-                    src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
-                    alt={actor}
+                    src={`https://image.tmdb.org/t/p/w500${profile_path}`}
+                    alt={name}
                   />
                 ) : null}
               </li>
             ))}
           </ul>
+        ) : (
+          <p>We don't have cast for this movie.</p>
         )}
       </>
     );

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
-import axios from 'axios';
 
 import routes from '../routes';
+
+import moviesApi from '../services/movies-api';
 
 import MovieDetailsBlock from '../Components/MovieDetailsBlock/MovieDetailsBlock';
 import Cast from '../Components/Cast/Cast';
@@ -18,14 +19,13 @@ class MovieDetailsPageView extends Component {
     poster_path: '',
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.fetchMovieDetails();
   }
 
   async fetchMovieDetails() {
-    const responce = await axios.get(
-      `https://api.themoviedb.org/3/movie/${this.props.match.params.movieId}?api_key=ec0633f4801b6d57348783906eedf2d2&language=en-US`,
-    );
+    const { movieId } = this.props.match.params;
+    const responce = await moviesApi.fetchDetails(movieId);
 
     this.setState({ ...responce.data });
   }
@@ -36,12 +36,12 @@ class MovieDetailsPageView extends Component {
       return history.push(location.state.from);
     }
     history.push(routes.movies);
-    // history.push(location?.state?.from || routes.movies);
   };
 
   render() {
     const { title, vote_average, overview, genres, poster_path } = this.state;
     const { url } = this.props.match;
+    const { location } = this.props;
 
     return (
       <>
@@ -57,10 +57,28 @@ class MovieDetailsPageView extends Component {
         />
         <ul>
           <li>
-            <NavLink to={`${url}/cast`}>Cast</NavLink>
+            <NavLink
+              to={{
+                pathname: `${url}/cast`,
+                state: {
+                  from: location,
+                },
+              }}
+            >
+              Cast
+            </NavLink>
           </li>
           <li>
-            <NavLink to={`${url}/reviews`}>Reviews</NavLink>
+            <NavLink
+              to={{
+                pathname: `${url}/reviews`,
+                state: {
+                  from: location,
+                },
+              }}
+            >
+              Reviews
+            </NavLink>
           </li>
         </ul>
         <Route

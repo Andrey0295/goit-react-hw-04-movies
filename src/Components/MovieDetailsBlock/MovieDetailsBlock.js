@@ -6,7 +6,6 @@ const MovieDetailsBlock = ({
   vote_average,
   overview,
   genres,
-  location,
 }) => {
   return (
     <div>

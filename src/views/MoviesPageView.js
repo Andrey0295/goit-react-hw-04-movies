@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
-import axios from 'axios';
+
+import moviesApi from '../services/movies-api';
 
 import MoviesList from '../Components/MoviesList/MoviesList';
 import SearchForm from '../Components/SearchForm/SearchForm';
@@ -11,7 +12,6 @@ class MoviesPageView extends Component {
     searchQuery: '',
     error: null,
   };
-  componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
@@ -25,10 +25,10 @@ class MoviesPageView extends Component {
   };
 
   fetchMovies = () => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=ec0633f4801b6d57348783906eedf2d2&language=en-US&query=${this.state.searchQuery}&page=1&include_adult=false`,
-      )
+    const { searchQuery } = this.state;
+
+    moviesApi
+      .fetchSearchMovies(searchQuery)
       .then(responce => this.setState({ movies: responce.data.results }))
       .catch(error => this.setState({ error }));
   };

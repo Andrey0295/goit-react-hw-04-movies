@@ -13,19 +13,21 @@ class SearchForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    const { query } = this.state;
 
-    this.props.onSubmit(this.state.query);
+    this.props.onSubmit(query);
 
     this.setState({ query: '' });
   };
 
   render() {
+    const { query } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor={this.searchInputId}></label>
         <input
           type="text"
-          value={this.state.query}
+          value={query}
           id={this.searchInputId}
           onChange={this.onInputChange}
         />
