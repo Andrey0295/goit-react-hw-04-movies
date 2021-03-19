@@ -3,12 +3,16 @@ import { Route, Switch } from 'react-router-dom';
 
 import Container from './Components/Container/Container';
 import AppBar from './Components/AppBar/AppBar';
-import NotFoundView from './views/NotFoundView';
+// import HomePageView from './views/HomePageView';
 
 import routes from '../src/routes';
 
 const HomePageView = lazy(() =>
-  import('./views/HomePageView' /* webpackChunkName: "home-view" */),
+  import('./views/HomePageView' /* webpackChunkName: "home-page-view" */),
+);
+
+const NotFoundView = lazy(() =>
+  import('./views/NotFoundView' /* webpackChunkName: "not-found-view" */),
 );
 const MoviesPageView = lazy(() =>
   import('./views/MoviesPageView' /* webpackChunkName: "movies-view" */),
