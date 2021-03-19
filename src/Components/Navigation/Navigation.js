@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import styles from '../../styles/styles.module.css';
+import styles from './Navigation.module.css';
 
 import routes from '../../routes';
 
 const Navigation = () => {
   return (
-    <nav>
+    <nav className={styles.navigation_block}>
       <NavLink
         exact
         to={routes.home}

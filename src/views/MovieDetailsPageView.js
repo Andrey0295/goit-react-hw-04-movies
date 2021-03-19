@@ -45,7 +45,7 @@ class MovieDetailsPageView extends Component {
 
     return (
       <>
-        <button type="button" onClick={this.handleGoBack}>
+        <button className="goBackBtn" type="button" onClick={this.handleGoBack}>
           Go back
         </button>
         <MovieDetailsBlock

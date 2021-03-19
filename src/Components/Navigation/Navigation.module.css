@@ -1,9 +1,15 @@
 .link{
-    color: black;
+    margin-right: 1em;;
+    color: white;
     font-size: 18px;
+
 }
 
 .linkActive{
     color: limegreen;
     font-size: 18px;
+}
+
+.navigation_block{
+    margin-left: 7em;
 }

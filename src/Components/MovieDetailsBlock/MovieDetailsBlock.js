@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styles from './MovieDetailsBlock.module.css';
+
 const MovieDetailsBlock = ({
   imageUrl,
   movieTitle,
@@ -8,25 +10,32 @@ const MovieDetailsBlock = ({
   genres,
 }) => {
   return (
-    <div>
+    <div className={styles.mainBlock}>
       <div>
+        {' '}
         {imageUrl !== '' && (
-          <img src={`https://image.tmdb.org/t/p/w500${imageUrl}`} alt="" />
+          <img
+            src={`https://image.tmdb.org/t/p/w500${imageUrl}`}
+            alt=""
+            className={styles.posterMovie}
+          />
         )}
+      </div>
+      <div className={styles.descriptionBlock}>
         <div>
           <h1>{movieTitle}</h1>
           <p>Vote average: {vote_average}</p>
         </div>
-      </div>
-      <div>
-        <h2>Overview</h2>
-        <p>{overview}</p>
-      </div>
-      <div>
-        <h3>Genres: </h3>
-        {genres.map(({ id, name }) => (
-          <span key={id}>{name}, </span>
-        ))}
+        <div>
+          <h2>Overview</h2>
+          <p>{overview}</p>
+        </div>
+        <div>
+          <h3>Genres: </h3>
+          {genres.map(({ id, name }) => (
+            <p key={id}>{name}</p>
+          ))}
+        </div>
       </div>
     </div>
   );

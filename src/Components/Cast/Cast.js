@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import moviesApi from '../../services/movies-api';
 
+import styles from './Cast.module.css';
+
 class Cast extends Component {
   state = {
     actors: [],
@@ -18,12 +20,13 @@ class Cast extends Component {
     return (
       <>
         {actors.length > 0 ? (
-          <ul>
+          <ul className={styles.castList}>
             {actors.map(({ id, name, profile_path }) => (
               <li key={id}>
                 <p>{name}</p>
                 {profile_path ? (
                   <img
+                    className={styles.CastPhoto}
                     src={`https://image.tmdb.org/t/p/w500${profile_path}`}
                     alt={name}
                   />

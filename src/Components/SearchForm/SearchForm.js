@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
 
+import styles from './SearchForm.module.css';
+
 class SearchForm extends Component {
   state = {
     query: '',
@@ -26,8 +28,10 @@ class SearchForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <label htmlFor={this.searchInputId}></label>
         <input
+          className={styles.searchInput}
           type="text"
           value={query}
+          placeholder="Search movie"
           id={this.searchInputId}
           onChange={this.onInputChange}
         />
